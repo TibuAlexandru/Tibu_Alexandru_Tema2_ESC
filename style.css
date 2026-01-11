@@ -1,41 +1,50 @@
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2b1055, #7597de);
-    min-height: 100vh;
+    background-color: #1e1e2f;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    height: 100vh;
 }
 
 .container {
-    text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background-color: #2b2b3c;
     padding: 30px;
-    border-radius: 12px;
-    width: 350px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
 }
 
 button {
-    background-color: #ffcc00;
-    border: none;
-    padding: 12px 20px;
+    padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #ffdd33;
+    background-color: #7b6cff;
 }
 
-.card {
-    background-color: rgba(255, 255, 255, 0.15);
+#spellCard {
+    margin-top: 20px;
     padding: 15px;
+    background-color: #3a3a55;
     border-radius: 8px;
 }
 
-h2 {
-    margin-bottom: 10px;
+.error {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
 }
