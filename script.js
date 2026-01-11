@@ -1,39 +1,34 @@
 const API_URL = "https://wizard-world-api.herokuapp.com/Spells";
 
-const button = document.getElementById("generateSpellBtn");
+const generateBtn = document.getElementById("generateSpellBtn");
 const spellCard = document.getElementById("spellCard");
 const spellName = document.getElementById("spellName");
-const spellDescription = document.getElementById("spellDescription");
-const errorAlert = document.getElementById("errorAlert");
+const spellEffect = document.getElementById("spellEffect");
+const errorBox = document.getElementById("errorBox");
 
-button.addEventListener("click", () => {
-    getRandomSpell();
-});
+generateBtn.addEventListener("click", async () => {
+    console.clear();
+    console.log("🔮 Buton apăsat - se încearcă generarea unei vraji");
 
-async function getRandomSpell() {
-    console.log("➡️ Pornire cerere către API...");
-
-    // Reset UI
-    errorAlert.classList.add("hidden");
+    errorBox.classList.add("hidden");
     spellCard.classList.add("hidden");
 
     try {
-        console.log("🌐 Se face fetch către:", API_URL);
+        console.log("🌐 Se trimite request către API:", API_URL);
+
         const response = await fetch(API_URL);
 
-        console.log("📥 Răspuns primit:", response);
+        console.log("📡 Răspuns primit:", response.status);
 
         if (!response.ok) {
             throw new Error(`Eroare HTTP: ${response.status}`);
         }
 
-        console.log("📦 Se parsează JSON...");
         const spells = await response.json();
+        console.log("📜 Lista de vrăji primită:", spells);
 
-        console.log("📊 Număr de vrăji primite:", spells.length);
-
-        if (spells.length === 0) {
-            throw new Error("Lista de vrăji este goală.");
+        if (!spells.length) {
+            throw new Error("Lista de vrăji este goală");
         }
 
         const randomIndex = Math.floor(Math.random() * spells.length);
@@ -42,18 +37,23 @@ async function getRandomSpell() {
         console.log("✨ Vrajă aleasă:", randomSpell);
 
         spellName.textContent = randomSpell.name || "Vrajă necunoscută";
-        spellDescription.textContent =
-            randomSpell.description || "Nu există descriere.";
+        spellEffect.textContent =
+            randomSpell.effect || "Această vrajă nu are un efect cunoscut.";
+
+        // reset animație fade
+        spellCard.style.animation = "none";
+        spellCard.offsetHeight; // force reflow
+        spellCard.style.animation = null;
 
         spellCard.classList.remove("hidden");
 
-        console.log("✅ Vraja a fost afișată cu succes!");
+        console.log("✅ Vrajă afișată cu succes");
 
     } catch (error) {
-        console.error("❌ Eroare apărută:", error);
+        console.error("❌ A apărut o eroare:", error);
 
-        errorAlert.textContent =
-            "A apărut o eroare la încărcarea vrăjii. Încearcă din nou.";
-        errorAlert.classList.remove("hidden");
+        errorBox.textContent =
+            "Nu s-a putut încărca vraja. Verifică conexiunea sau încearcă mai târziu.";
+        errorBox.classList.remove("hidden");
     }
-}
+});
