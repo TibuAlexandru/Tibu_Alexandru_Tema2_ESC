@@ -9,11 +9,15 @@ button.addEventListener("click", async () => {
         const response = await fetch(API_URL);
         const spells = await response.json();
 
-        const randomIndex = Math.floor(Math.random() * spells.length);
-        const spell = spells[randomIndex];
+        // unele vrăji nu au effect → le filtrăm
+        const spellsWithEffect = spells.filter(spell => spell.effect);
+
+        const randomIndex = Math.floor(Math.random() * spellsWithEffect.length);
+        const spell = spellsWithEffect[randomIndex];
 
         spellName.textContent = spell.name;
-        spellDescription.textContent = spell.description || "Această vrajă nu are descriere.";
+        spellDescription.textContent = spell.effect;
+
     } catch (error) {
         spellName.textContent = "Eroare";
         spellDescription.textContent = "Nu s-au putut încărca vrăjile.";
